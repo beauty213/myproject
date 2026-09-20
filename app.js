@@ -71,20 +71,44 @@ const state = {
       <div class="sub">Threads are groups of receipts that describe one moment, routine, or phase.</div>
     `;
     frag.appendChild(summary);
-    const story = document.createElement("div");
+   // ---- Computed story ----
+const byYear = {};
+receipts.forEach(r => {
+  const y = new Date(r.when).getFullYear();
+  if (!byYear[y]) byYear[y] = { spotify: 0, household: 0, india: 0, hours: [], cats: {} };
+  byYear[y][r.source] = (byYear[y][r.source] || 0) + 1;
+  byYear[y].hours.push(new Date(r.when).getHours());
+  if (r.category) byYear[y].cats[r.category] = (byYear[y].cats[r.category] || 0) + 1;
+});
+
+const years = Object.keys(byYear).map(Number).sort();
+const acts = years.map(y => {
+  const d = byYear[y];
+  const total = d.spotify + d.household + d.india;
+  const dominant = [
+    ["music", d.spotify],
+    ["household spending", d.household],
+    ["purchases", d.india]
+  ].sort((a,b) => b[1] - a[1])[0][0];
+
+  const avgHour = d.hours.reduce((s,h) => s+h, 0) / d.hours.length;
+  const timeOfDay = avgHour < 6 ? "late night"
+                  : avgHour < 12 ? "morning"
+                  : avgHour < 17 ? "afternoon"
+                  : avgHour < 21 ? "evening" : "night";
+
+  const topCat = Object.entries(d.cats).sort((a,b) => b[1] - a[1])[0];
+  const catText = topCat ? `, dominated by ${topCat[0]}` : "";
+
+  return `<strong>${y} — ${timeOfDay} ${dominant}${catText}.</strong> ${total} receipts recorded.`;
+});
+
+const story = document.createElement("div");
 story.className = "summary";
 story.innerHTML = `
-  <h2>Your life, in three acts</h2>
-  <div class="sub" style="font-size:14px;color:var(--text);margin-top:8px;line-height:1.6;">
-    <strong>Act I — Listening years (2013–2016).</strong>
-    Hundreds of music sessions. Indie rock and classic rock dominate.
-    Frequent late-night playlists.<br><br>
-    <strong>Act II — Routine years (2018).</strong>
-    Household spending appears: food, transport, subscriptions.
-    The rhythm of a working life.<br><br>
-    <strong>Act III — Purchase years (2023).</strong>
-    Entertainment and fitness transactions — larger amounts,
-    different merchants. A shift in priorities.
+  <h2>Your life, computed</h2>
+  <div class="sub" style="font-size:13px;color:var(--text);margin-top:8px;line-height:1.8;">
+    ${acts.slice(-4).join("<br><br>")}
   </div>
 `;
 frag.appendChild(story);

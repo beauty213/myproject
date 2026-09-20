@@ -1,0 +1,12 @@
+{
+  "name": "memory-threads",
+  "version": "1.0.0",
+  "description": "Groups personal life receipts into explainable Memory Threads.",
+  "main": "app.js",
+  "scripts": {
+    "build": "node build.js",
+    "start": "python3 -m http.server 8000"
+  },
+  "keywords": ["memory-threads", "receipts", "vanilla-js", "static-site"],
+  "license": "MIT"
+}

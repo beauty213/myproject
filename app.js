@@ -71,6 +71,53 @@ const state = {
       <div class="sub">Threads are groups of receipts that describe one moment, routine, or phase.</div>
     `;
     frag.appendChild(summary);
+    const story = document.createElement("div");
+story.className = "summary";
+story.innerHTML = `
+  <h2>Your life, in three acts</h2>
+  <div class="sub" style="font-size:14px;color:var(--text);margin-top:8px;line-height:1.6;">
+    <strong>Act I — Listening years (2013–2016).</strong>
+    Hundreds of music sessions. Indie rock and classic rock dominate.
+    Frequent late-night playlists.<br><br>
+    <strong>Act II — Routine years (2018).</strong>
+    Household spending appears: food, transport, subscriptions.
+    The rhythm of a working life.<br><br>
+    <strong>Act III — Purchase years (2023).</strong>
+    Entertainment and fitness transactions — larger amounts,
+    different merchants. A shift in priorities.
+  </div>
+`;
+frag.appendChild(story);
+    // Search
+const search = document.createElement("input");
+search.type = "text";
+search.className = "search";
+search.placeholder = "Search threads, artists, categories...";
+search.addEventListener("input", (e) => {
+  const q = e.target.value.toLowerCase();
+  document.querySelectorAll(".thread-card").forEach(card => {
+    card.style.display = card.textContent.toLowerCase().includes(q) ? "" : "none";
+  });
+});
+frag.appendChild(search);
+
+// Filters
+const filters = document.createElement("div");
+filters.className = "filters";
+["All", "Music", "Food", "Transportation", "Shopping", "Subscription"].forEach(c => {
+  const btn = document.createElement("button");
+  btn.className = "filter-chip" + (c === "All" ? " active" : "");
+  btn.textContent = c;
+  btn.onclick = () => {
+    document.querySelectorAll(".filter-chip").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll(".thread-card").forEach(card => {
+      card.style.display = (c === "All" || card.textContent.toLowerCase().includes(c.toLowerCase())) ? "" : "none";
+    });
+  };
+  filters.appendChild(btn);
+});
+frag.appendChild(filters);
     if (threads[0]) {
         const featured = threads[0];
         const hero = document.createElement("div");

@@ -17,3 +17,15 @@ No black-box AI. No invented narrative. Transparent rules you can read in the so
 The twist: **threads span data sources** — a Spotify play, a household transaction, and an India purchase from the same evening are grouped as one moment, not three.
 
 ## How it works
+## Challenges & Solutions
+
+- **Three different date formats** across sources (D/M/Y, M/D/Y, ISO) → wrote three separate parsers that normalize to UTC.
+- **Cross-source grouping.** A Spotify play and a household purchase rarely share a timestamp by accident — implemented a 90-minute window rule.
+- **Too many threads.** 100k+ receipts produced 20,875 threads → ranked by cross-source strength and capped at 20.
+
+## Future Work
+
+- Light mode toggle
+- Merge/split threads manually
+- Save favourite threads to localStorage
+- Export a thread as an image

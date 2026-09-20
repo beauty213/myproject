@@ -1,35 +1,28 @@
 # Memory Threads
 
-A focused web app that groups personal "life receipts" into **Memory Threads** — clusters of 2 to 6 receipts that appear to describe one real-life moment, routine, or life phase.
+> **Live demo:** [https://thunderous-brigadeiros-35a3c5.netlify.app](https://thunderous-brigadeiros-35a3c5.netlify.app)
 
-Each thread explains *why* its receipts belong together, so you always understand the connection.
+**Groups personal life receipts (Spotify, household, India transactions) into explainable clusters called Memory Threads.**
 
----
+![Screenshot](screenshots/home.png)
 
-## What it does
+## Why this is different
 
-- Reads three personal data sources:
-  - **Spotify history** — tracks you actually listened to
-  - **Household transactions** — daily spending and routines
-  - **India transactions** — merchant and category records
-- Groups them into **Memory Threads** using three transparent rules:
-  1. **Session** — receipts within 90 minutes of each other
-  2. **Same day** — 2 to 6 receipts on one calendar date
-  3. **Recurrence** — same artist or category appearing on 3+ different days
-- Displays each thread with a plain-English explanation of the grouping logic
-- Lets you drill into any individual receipt for its full detail
+Every other "personal data" app just shows a list.
 
-No backend. No authentication. No AI chatbot. No graph physics.
+Memory Threads **tells you why items belong together** — with a
+plain-English explanation on every cluster:
 
----
+> *"6 receipts within an 81-minute window on 2016-12-11 (household + spotify)."*
 
-## Try it live
+No black-box AI. No invented narrative. Transparent rules you can
+read in the source.
 
-**Netlify:** [https://thunderous-brigadeiros-35a3c5.netlify.app](https://thunderous-brigadeiros-35a3c5.netlify.app)
+The twist: **threads span data sources** — a Spotify play, a
+household transaction, and an India purchase from the same evening
+are grouped as one moment, not three.
 
-**GitHub Pages:** *(add your URL once Pages is enabled)*
-
----
+## How it works
 
 ## Project structure
 
